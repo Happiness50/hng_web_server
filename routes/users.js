@@ -1,9 +1,9 @@
-import express from 'express';
+const express = require('express');
 const Controller = require('../controllers/postControllers');
 
-const router = require.Router();
+const router = express.Router();
 
 // Retrieve a single user
 router.get('/hello', Controller.markHello);
 
-export default router;
+module.exports = router;
