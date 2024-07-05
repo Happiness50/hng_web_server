@@ -1,27 +1,24 @@
-const  express = require('express');
-const cors = require('cors');
+import express from 'express';
+import users from './routes/users.js';
 const port = process.env.PORT || 3000;
+
 
 const app = express();
 
-app.use(cors());
+// Body parser middleware
+app.use(express.json()); // take care to submit raw json
+app.use(express.urlencoded({ extended: false }));
 
-app.get('/api/hello', (req, res) => {
+// Logger Middleware
+app.use(logger);
 
-    const visitorName = req.query.visitor_name || 'Guest';
+// Routes
+app.use('/api/users', users);
 
-    const clientIp = req.ip;
-
-    const response = {
-        clientIp: clientIp,
-
-        greetings: `Hello, ${visitorName}!`
-    };
-
-    res.json(response);
-})
-
+// Error Handler
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => {
-    console.log(`server running on http://localhost:$(port)`);
+    console.log(`server is running on port ${port}`)
 });
